@@ -86,7 +86,7 @@ public class IcpExample : MonoBehaviour
         }
 
         // オドメトリのゲームオブジェクトを更新（デバッグ用）
-        odometry.transform.position = new Vector3((float)translation_.y, 0.25f, (float)translation_.x);
+        odometry.transform.position = new Vector3((float)translation_.x, 0.25f, (float)translation_.y);
         odometry.transform.rotation = MathUtils.ToQuatUnity(rotation_);
     }
 
