@@ -22,6 +22,16 @@ namespace AuNex
             }
 
             /// <summary>
+            /// ラジアンをQuaternionに変換する
+            /// </summary>
+            /// <param name="rad"></param>
+            /// <returns>Quaternion</returns>
+            public static Quaternion ToQuat(float rad)
+            {
+                return Quaternion.Euler(0, 0, rad * Mathf.Rad2Deg);
+            }
+
+            /// <summary>
             /// Quaternionを回転行列に変換する
             /// </summary>
             /// <param name="quat">Quaternion</param>
@@ -35,6 +45,16 @@ namespace AuNex
                 rot_matrix[1, 0] = Mathf.Sin(angle);
                 rot_matrix[1, 1] = Mathf.Cos(angle);
                 return rot_matrix;
+            }
+
+            /// <summary>
+            /// Quaternionをラジアンに変換する
+            /// </summary>
+            /// <param name="quat"></param>
+            /// <returns>ラジアン</returns>
+            public static float toRad(Quaternion quat)
+            {
+                return quat.eulerAngles.z * Mathf.Deg2Rad;
             }
         }
     }
