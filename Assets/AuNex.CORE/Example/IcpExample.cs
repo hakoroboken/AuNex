@@ -21,6 +21,10 @@ public class IcpExample : MonoBehaviour
     // ICPのパラメータ
     public int max_iterations = 50;
     public float tolerance = 0.001f;
+    // Hashセルサイズ
+    public float hash_cell_size = 0.1f;
+    // ICPの最大対応点距離
+    public float max_correspondence_distance = 0.3f;
     // ノードの名前
     public String node_name = "icp_example_node";
     // LIDARのトピック名
@@ -41,7 +45,7 @@ public class IcpExample : MonoBehaviour
     // 姿勢のサブスクライバ
     private ISubscription<geometry_msgs.msg.Quaternion> posture_subscription;
     // AuNex.Localizationライブラリで定義されたICPアルゴリズム
-    private IterativeClosestPoint icp;
+    private ICP_Hash icp;
     // ICPの初期化フラグ
     private bool is_initialized = false;
     // 推定結果
@@ -54,7 +58,7 @@ public class IcpExample : MonoBehaviour
     void Start()
     {
         ros2Unity = GetComponent<ROS2UnityComponent>();
-        icp = new IterativeClosestPoint();
+        icp = new ICP_Hash(hash_cell_size, max_correspondence_distance);
         rotation_ = Matrix<double>.Build.DenseIdentity(2);
         translation_ = Vector2.zero;
     }
