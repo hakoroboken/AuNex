@@ -49,7 +49,9 @@ public class IcpExample : MonoBehaviour
     // ICPの初期化フラグ
     private bool is_initialized = false;
     // 推定結果
-    private Matrix<double> rotation_;
+    // 回転は２次元なのでradで表現
+    private float rotation_;
+    // 並進は2Dベクトルで表現
     private Vector2 translation_;
 
 
@@ -59,7 +61,7 @@ public class IcpExample : MonoBehaviour
     {
         ros2Unity = GetComponent<ROS2UnityComponent>();
         icp = new ICP_Hash(hash_cell_size, max_correspondence_distance);
-        rotation_ = Matrix<double>.Build.DenseIdentity(2);
+        rotation_ = 0.0f;
         translation_ = Vector2.zero;
     }
 
@@ -84,8 +86,8 @@ public class IcpExample : MonoBehaviour
         }
 
         // オドメトリのゲームオブジェクトを更新（デバッグ用）
-        odometry.transform.position = new Vector3((float)translation_.x, 0.2f, (float)translation_.y);
-        odometry.transform.rotation = MathUtils.ToQuat(rotation_);
+        odometry.transform.position = new Vector3((float)translation_.y, 0.2f, (float)translation_.x);
+        odometry.transform.rotation = MathUtils.ToQuatUnity(rotation_);
     }
 
     void ProcessScan(sensor_msgs.msg.LaserScan msg)
@@ -124,6 +126,6 @@ public class IcpExample : MonoBehaviour
     {
         // 受信した姿勢を使ってICPの初期推定を更新
         Quaternion quat = new Quaternion((float)msg.X, (float)msg.Y, (float)msg.Z, (float)msg.W);
-        rotation_ = MathUtils.ToRotMatrix(quat);
+        rotation_ = MathUtils.toRadUnity(quat);
     }
 }
