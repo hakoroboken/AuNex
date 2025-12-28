@@ -10,6 +10,7 @@ public class DifferentialDriver : MonoBehaviour
     public String node_name = "differential_drive_node";
     public String left_topic_name = "/left_wheel_velocity";
     public String right_topic_name = "/right_wheel_velocity";
+    public String posture_topic_name = "/robot_posture";
     public ArticulationBody leftWheel;
     public ArticulationBody rightWheel;
 
@@ -18,6 +19,7 @@ public class DifferentialDriver : MonoBehaviour
     private ROS2Node node;
     private ISubscription<std_msgs.msg.Float32> left_subscription;
     private ISubscription<std_msgs.msg.Float32> right_subscription;
+    private IPublisher<geometry_msgs.msg.Quaternion> posture_publisher;
 
     private float left_wheel_velocity = 0.0f;
     private float right_wheel_velocity = 0.0f;
@@ -46,10 +48,20 @@ public class DifferentialDriver : MonoBehaviour
                 right_topic_name, 
                 DriveRightWheel
             );
+
+            posture_publisher = node.CreatePublisher<geometry_msgs.msg.Quaternion>(posture_topic_name);
         }
 
         leftWheel.SetDriveTargetVelocity(ArticulationDriveAxis.X, left_wheel_velocity);
         rightWheel.SetDriveTargetVelocity(ArticulationDriveAxis.X, right_wheel_velocity);
+
+        geometry_msgs.msg.Quaternion posture_msg = new geometry_msgs.msg.Quaternion();
+        Quaternion posture = transform.rotation;
+        posture_msg.X = posture.x;
+        posture_msg.Y = posture.y;
+        posture_msg.Z = posture.z;
+        posture_msg.W = posture.w;
+        posture_publisher.Publish(posture_msg);
     }
 
     void DriveLeftWheel(std_msgs.msg.Float32 msg)
