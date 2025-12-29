@@ -346,8 +346,10 @@ namespace AuNex
                     Vector2 ps = sourcePoints[i] - sourceCentroid;
                     Vector2 pt = targetPoints[i] - targetCentroid;
 
-                    num += ps.x * pt.y - ps.y * pt.x;
-                    den += ps.x * pt.x + ps.y * pt.y;
+                    // 距離が近いほど信頼する
+                    float w = 1.0f - (Vector2.SqrMagnitude(ps - pt) / maxDistance);
+                    num += w * (ps.x * pt.y - ps.y * pt.x);
+                    den += w * (ps.x * pt.x + ps.y * pt.y);
                 }
 
                 // 最小二乗解としての回転角
