@@ -347,7 +347,7 @@ namespace AuNex
                     Vector2 pt = targetPoints[i] - targetCentroid;
 
                     // 距離が近いほど信頼する
-                    float w = 1.0f - (Vector2.SqrMagnitude(ps - pt) / maxDistance);
+                    float w = 1.0f - (Vector2.SqrMagnitude(ps - pt) / (maxDistance * maxDistance));
                     num += w * (ps.x * pt.y - ps.y * pt.x);
                     den += w * (ps.x * pt.x + ps.y * pt.y);
                 }
