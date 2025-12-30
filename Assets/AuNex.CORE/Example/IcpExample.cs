@@ -22,7 +22,7 @@ public class IcpExample : MonoBehaviour
     public int max_iterations = 50;
     public float tolerance = 0.001f;
     // Hashセルサイズ
-    public float hash_cell_size = 0.1f;
+    public float hash_cell_size = 0.3f;
     // ICPの最大対応点距離
     public float max_correspondence_distance = 0.3f;
     // ノードの名前
@@ -31,8 +31,8 @@ public class IcpExample : MonoBehaviour
     public String scan_topic = "/scan";
     // 姿勢のトピック名
     public String posture_topic = "/robot_posture";
-    // デバッグ用で動かすオドメトリのゲームオブジェクト
-    public GameObject odometry;
+    // 推定した自己位置のトピック名
+    public String pose_topic = "/pose";
 
 
     // ROS2
@@ -44,6 +44,8 @@ public class IcpExample : MonoBehaviour
     private ISubscription<sensor_msgs.msg.LaserScan> scan_subscription;
     // 姿勢のサブスクライバ
     private ISubscription<geometry_msgs.msg.Quaternion> posture_subscription;
+    // 自己位置のPublisher
+    private IPublisher<geometry_msgs.msg.PoseStamped> pose_publisher;
     // AuNex.Localizationライブラリで定義されたICPアルゴリズム
     private ICP_Hash icp;
     // ICPの初期化フラグ
@@ -83,11 +85,24 @@ public class IcpExample : MonoBehaviour
                 posture_topic,
                 ProcessPosture
             );
+
+            pose_publisher = node.CreatePublisher<geometry_msgs.msg.PoseStamped>(pose_topic);
         }
 
-        // オドメトリのゲームオブジェクトを更新（デバッグ用）
-        odometry.transform.position = new Vector3((float)translation_.x, 0.25f, (float)translation_.y-2.2f);
-        odometry.transform.rotation = MathUtils.ToQuatUnity(rotation_);
+        // 推定した自己位置をROS2に送信
+        var tf_msg = new geometry_msgs.msg.PoseStamped();
+        node.clock.UpdateROSClockTime(tf_msg.Header.Stamp);
+        tf_msg.Header.Frame_id = "map";
+        tf_msg.Pose.Position.X = translation_.x;
+        tf_msg.Pose.Position.Y = translation_.y;
+        tf_msg.Pose.Position.Z = 0.0;
+        Quaternion quat = Quaternion.Euler(0.0f, 0.0f, rotation_ * Mathf.Rad2Deg);
+        tf_msg.Pose.Orientation.X = quat.x;
+        tf_msg.Pose.Orientation.Y = quat.y;
+        tf_msg.Pose.Orientation.Z = quat.z;
+        tf_msg.Pose.Orientation.W = quat.w;
+
+        pose_publisher.Publish(tf_msg);
     }
 
     void ProcessScan(sensor_msgs.msg.LaserScan msg)
