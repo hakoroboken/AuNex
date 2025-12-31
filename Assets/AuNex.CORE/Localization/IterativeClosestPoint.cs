@@ -106,11 +106,11 @@ namespace AuNex
                         else max_dist = maxDistance * 0.25f;
 
                         // 最近傍点を探索
-                        srcCorr.Add(rotated);
                         Vector2 nearest = kdTree.FindNearest(rotated);
                         // 最大距離以内なら対応点として追加
                         if (Vector2.SqrMagnitude(rotated - nearest) < max_dist * max_dist)
                         {
+                            srcCorr.Add(rotated);
                             tgtCorr.Add(nearest);
                         }
                     }
@@ -170,8 +170,10 @@ namespace AuNex
                     Vector2 ps = sourcePoints[i] - sourceCentroid;
                     Vector2 pt = targetPoints[i] - targetCentroid;
 
-                    num += ps.x * pt.y - ps.y * pt.x;
-                    den += ps.x * pt.x + ps.y * pt.y;
+                    // 距離が近いほど信頼する
+                    float w = 1.0f - (Vector2.SqrMagnitude(ps - pt) / (maxDistance * maxDistance));
+                    num += w * (ps.x * pt.y - ps.y * pt.x);
+                    den += w * (ps.x * pt.x + ps.y * pt.y);
                 }
 
                 // 最小二乗解としての回転角
@@ -275,16 +277,8 @@ namespace AuNex
                             sin * p.x + cos * p.y + position.y
                         );
 
-                        // ICPの進行に応じて対応点探索の最大距離を減少
-                        float max_dist_coef = (float)iter / (float)maxIterations;
-                        float max_dist = 0.0f;
-                        if(max_dist_coef < 0.25)max_dist = maxDistance;
-                        else if(max_dist_coef < 0.5)max_dist = maxDistance * 0.75f;
-                        else if(max_dist_coef < 0.75)max_dist = maxDistance * 0.5f;
-                        else max_dist = maxDistance * 0.25f;
-
                         // 最近傍点を探索
-                        if(spatialHash.FindNearest(rotated, max_dist, out var nearestPoint))
+                        if(spatialHash.FindNearest(rotated, maxDistance, out var nearestPoint))
                         {
                             srcCorr.Add(rotated);
                             tgtCorr.Add(nearestPoint);
