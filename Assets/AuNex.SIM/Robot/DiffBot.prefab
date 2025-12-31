@@ -269,7 +269,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!138 &8355228282006121657
 FixedJoint:
@@ -429,7 +429,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!138 &1239841939385804281
 FixedJoint:
@@ -619,8 +619,8 @@ ArticulationBody:
     target: 0
     targetVelocity: 0
     driveType: 0
-  m_LinearDamping: 0.05
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0
   m_JointFriction: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -869,6 +869,18 @@ PrefabInstance:
       value: 0.000000028068733
       objectReference: {fileID: 0}
     - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_JointFriction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_XDrive.driveType
       value: 3
       objectReference: {fileID: 0}
@@ -907,6 +919,14 @@ PrefabInstance:
     - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_ParentAnchorRotation.z
       value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486313061363322348, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486313061363322348, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4335251799397814824, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_ParentAnchorPosition.x
@@ -1339,6 +1359,10 @@ PrefabInstance:
       value: base_link
       objectReference: {fileID: 0}
     - target: {fileID: 1072748714373430414, guid: 4d3d766ea1db38badaa5a6b3798f7b8d, type: 3}
+      propertyPath: enable_debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072748714373430414, guid: 4d3d766ea1db38badaa5a6b3798f7b8d, type: 3}
       propertyPath: noise_stddev
       value: 0.005
       objectReference: {fileID: 0}
@@ -1617,6 +1641,18 @@ PrefabInstance:
       value: 0.000000028068733
       objectReference: {fileID: 0}
     - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_JointFriction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_XDrive.driveType
       value: 3
       objectReference: {fileID: 0}
@@ -1651,6 +1687,14 @@ PrefabInstance:
     - target: {fileID: 3440548519881545209, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_ParentAnchorRotation.z
       value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486313061363322348, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486313061363322348, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4335251799397814824, guid: f1b977263c05f4ae89bf2f99ea259175, type: 3}
       propertyPath: m_ParentAnchorPosition.x

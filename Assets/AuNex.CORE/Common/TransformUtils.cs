@@ -57,7 +57,14 @@ namespace AuNex
                 tf.Transforms = new[]{transform};
 
                 return tf;
-            }            
+            }
+
+            public static float QuatToYaw(geometry_msgs.msg.Quaternion q)
+            {
+                var unity_q = new Quaternion((float)q.Y, (float)(-1.0*q.Z), (float)(-1.0*q.X), (float)(q.W));
+
+                return unity_q.eulerAngles.y * Mathf.Deg2Rad;
+            }          
         }
 
         public class TFBroadCaster

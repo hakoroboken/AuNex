@@ -56,8 +56,8 @@ public class DiffDriveExample : MonoBehaviour
         var left_msg = new std_msgs.msg.Float32();
         var right_msg = new std_msgs.msg.Float32();
 
-        float left_vel = linear_vel + wheel_width * angular_vel;
-        float right_vel = linear_vel - wheel_width * angular_vel;
+        float left_vel = 0.5f*linear_vel + wheel_width * angular_vel;
+        float right_vel = 0.5f*linear_vel - wheel_width * angular_vel;
 
         float left_omega = left_vel / wheel_radius;
         float right_omega = right_vel / wheel_radius;
