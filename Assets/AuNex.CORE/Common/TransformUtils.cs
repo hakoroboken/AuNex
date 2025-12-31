@@ -59,6 +59,23 @@ namespace AuNex
                 return tf;
             }            
         }
+
+        public class TFBroadCaster
+        {
+            private IPublisher<tf2_msgs.msg.TFMessage> publisher;
+
+            public TFBroadCaster(ROS2Node node)
+            {
+                publisher = node.CreatePublisher<tf2_msgs.msg.TFMessage>("/tf");
+            }
+
+            public void SendTransform(geometry_msgs.msg.TransformStamped t)
+            {
+                var tf = TransformUtils.CreateTFMessage(t);
+
+                publisher.Publish(tf);
+            }
+        }
     }// end of namespace Common
 }// end of namespace AuNex
 
