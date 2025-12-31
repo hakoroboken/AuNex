@@ -141,6 +141,6 @@ public class IcpExample : MonoBehaviour
     {
         // 受信した姿勢を使ってICPの初期推定を更新
         Quaternion quat = new Quaternion((float)msg.X, (float)msg.Y, (float)msg.Z, (float)msg.W);
-        rotation_ = -1.0f*MathUtils.toRadUnity(quat);
+        rotation_ = MathUtils.toRadUnity(quat);
     }
 }

@@ -54,7 +54,7 @@ namespace AuNex
             /// <returns>ラジアン</returns>
             public static float toRadUnity(Quaternion quat)
             {
-                return quat.eulerAngles.y * Mathf.Deg2Rad;
+                return -1.0f*quat.eulerAngles.y * Mathf.Deg2Rad;
             }
         }
     }
