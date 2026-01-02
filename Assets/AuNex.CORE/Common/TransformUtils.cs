@@ -46,9 +46,15 @@ namespace AuNex
             /// </summary>
             /// <param name="quaternion"></param>
             /// <returns></returns>
-            public static Quaternion Unity2Ros(this Quaternion quaternion)
+            public static geometry_msgs.msg.Quaternion Unity2Ros(this Quaternion quaternion)
             {
-                return new Quaternion(-quaternion.z, quaternion.x, -quaternion.y, quaternion.w);
+                var ros2_q = new geometry_msgs.msg.Quaternion();
+                ros2_q.X = -quaternion.z;
+                ros2_q.Y = quaternion.x;
+                ros2_q.Z = -quaternion.y;
+                ros2_q.W = quaternion.w;
+
+                return ros2_q;
             }
 
             public static tf2_msgs.msg.TFMessage CreateTFMessage(geometry_msgs.msg.TransformStamped transform)

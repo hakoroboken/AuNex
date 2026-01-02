@@ -57,12 +57,7 @@ public class DifferentialDriver : MonoBehaviour
             leftWheel.SetDriveTargetVelocity(ArticulationDriveAxis.X, left_wheel_velocity);
             rightWheel.SetDriveTargetVelocity(ArticulationDriveAxis.X, right_wheel_velocity);
 
-            geometry_msgs.msg.Quaternion posture_msg = new geometry_msgs.msg.Quaternion();
-            Quaternion posture = robotBody.transform.rotation;
-            posture_msg.X = posture.x;
-            posture_msg.Y = posture.y;
-            posture_msg.Z = posture.z;
-            posture_msg.W = posture.w;
+            var posture_msg = AuNex.Common.TransformUtils.Unity2Ros(robotBody.transform.rotation);
             posture_publisher.Publish(posture_msg);
         }
     }
