@@ -65,7 +65,20 @@ namespace AuNex
                 var unity_q = new Quaternion((float)q.X, (float)q.Y, (float)q.Z, (float)q.W);
 
                 return unity_q.eulerAngles.z * Mathf.Deg2Rad;
-            }          
+            }  
+
+            public static geometry_msgs.msg.Quaternion YawToQuat(float yaw)
+            {
+                var unity_q = Quaternion.Euler(0.0f, 0.0f, yaw);
+
+                var ros2_q = new geometry_msgs.msg.Quaternion();
+                ros2_q.X = unity_q.x;
+                ros2_q.Y = unity_q.y;
+                ros2_q.Z = unity_q.z;
+                ros2_q.W = unity_q.w;
+
+                return ros2_q;
+            }        
         }
 
         public class TFBroadCaster
