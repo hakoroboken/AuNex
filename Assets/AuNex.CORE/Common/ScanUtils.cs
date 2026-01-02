@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AuNex
 {
-    namespace Algorithm
+    namespace Common
     {
         class ScanUtils
         {

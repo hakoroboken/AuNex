@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AuNex
 {
-    namespace Algorithm
+    namespace Common
     {
         public class MathUtils
         {

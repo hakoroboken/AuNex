@@ -67,9 +67,9 @@ namespace AuNex
                 return unity_q.eulerAngles.z * Mathf.Deg2Rad;
             }  
 
-            public static geometry_msgs.msg.Quaternion YawToQuat(float yaw)
+            public static geometry_msgs.msg.Quaternion YawToQuat(float degree)
             {
-                var unity_q = Quaternion.Euler(0.0f, 0.0f, yaw);
+                var unity_q = Quaternion.Euler(0.0f, 0.0f, degree);
 
                 var ros2_q = new geometry_msgs.msg.Quaternion();
                 ros2_q.X = unity_q.x;
