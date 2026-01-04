@@ -43,7 +43,7 @@ public class PathCreateExample : MonoBehaviour
 
             if(user_input > 0.0)
             {
-                target_pose.Pose.Position.X = 2.0;
+                target_pose.Pose.Position.X = -2.0;
                 target_pose.Pose.Position.Y = 2.0;
                 target_pose.Pose.Position.Z = 0.0;
 
@@ -54,11 +54,11 @@ public class PathCreateExample : MonoBehaviour
             }
             else if(user_input < 0.0)
             {
-                target_pose.Pose.Position.X = 0.0;
+                target_pose.Pose.Position.X = 2.0;
                 target_pose.Pose.Position.Y = 4.0;
                 target_pose.Pose.Position.Z = 0.0;
 
-                target_pose.Pose.Orientation = AuNex.Common.TransformUtils.YawToQuat(90.0f);
+                target_pose.Pose.Orientation = AuNex.Common.TransformUtils.YawToQuat(0.0f);
 
                 var path = AuNex.Planning.CubicSpline.CreatePath(current, target_pose, N, "map");
                 path_publisher.Publish(path);
