@@ -31,9 +31,10 @@ namespace AuNex
                 writeTimeout = write_timeout;
 
                 isOpened = false;
+                receiveBuffer = new System.Collections.Concurrent.ConcurrentQueue<string>();
             }
 
-            public void OpenSerial()
+            public void OpenSerial(bool enable_read_thread)
             {
                 try
                 {
@@ -47,11 +48,15 @@ namespace AuNex
                     Debug.Log("Open Serial ...");
                     serialPort.Open();
 
+                    if(enable_read_thread)
+                    {
+                        new WaitForSeconds(1);
+                        Debug.Log("Start read thread.");
+                        isOpened = true;
+                        readThread = new System.Threading.Thread(Read);
+                        readThread.Start();
+                    }
                     new WaitForSeconds(1);
-                    Debug.Log("Start read thread.");
-                    isOpened = true;
-                    readThread = new System.Threading.Thread(Read);
-                    readThread.Start();
                 }
                 catch(Exception ex)
                 {
@@ -67,7 +72,7 @@ namespace AuNex
                 }
                 else
                 {
-                    Debug.LogError("Failed to get data from buffer.");
+                    // Debug.LogError("Failed to get data from buffer.");
 
                     return new String("ERROR");
                 }
@@ -81,7 +86,26 @@ namespace AuNex
                     return;
                 }
 
-                serialPort.WriteLine(write_data);
+                try
+                {
+                    serialPort.WriteLine(write_data);
+                }
+                catch(TimeoutException)
+                {
+                    
+                }
+            }
+
+            public String ReadSerial()
+            {
+                try
+                {
+                    return serialPort.ReadLine();
+                }
+                catch(TimeoutException)
+                {
+                    return null;
+                }
             }
 
             public void CloseSerial()
